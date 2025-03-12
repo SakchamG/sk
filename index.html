@@ -18,68 +18,82 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            margin: 0;
         }
 
         .loading-screen {
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             background: black;
-            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2rem;
-            transition: opacity 0.5s ease-in-out;
-            z-index: 10;
+            z-index: 1000;
         }
 
-        .hidden {
-            opacity: 0;
-            pointer-events: none;
+        .content {
+            display: none;
         }
 
-        h1 {
-            font-size: 4rem;
-            color: cyan;
-            text-shadow: 0px 0px 10px cyan, 0px 0px 20px cyan;
-            animation: glow 1.5s infinite alternate;
+        .wheel-and-hamster {
+            --dur: 1s;
+            position: relative;
+            width: 12em;
+            height: 12em;
+            font-size: 14px;
         }
-
-        p {
-            font-size: 1.5rem;
-            margin: 10px 0;
-            animation: fadeIn 2s ease-in-out;
+        .wheel,
+        .hamster,
+        .hamster div,
+        .spoke {
+            position: absolute;
         }
-
-        .caution {
-            color: red;
-            font-size: 2rem;
-            font-weight: bold;
-            text-shadow: 0px 0px 10px red, 0px 0px 20px red;
-            animation: pulse 1.5s infinite alternate;
+        .wheel {
+            background: radial-gradient(100% 100% at center, hsla(0,0%,60%,0) 47.8%, hsl(0,0%,60%) 48%);
+            z-index: 2;
         }
-
-        @keyframes glow {
-            0% { text-shadow: 0px 0px 10px cyan; }
-            100% { text-shadow: 0px 0px 20px cyan; }
+        .hamster {
+            animation: hamster var(--dur) ease-in-out infinite;
+            top: 50%;
+            left: calc(50% - 3.5em);
+            width: 7em;
+            height: 3.75em;
+            transform: rotate(4deg) translate(-0.8em,1.85em);
+            transform-origin: 50% 0;
+            z-index: 1;
         }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
+        @keyframes hamster {
+            from, to { transform: rotate(4deg) translate(-0.8em,1.85em); }
+            50% { transform: rotate(0) translate(-0.8em,1.85em); }
         }
     </style>
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen">Loading...</div>
+    <div class="loading-screen">
+        <div class="wheel-and-hamster">
+            <div class="wheel"></div>
+            <div class="hamster">
+                <div class="hamster__body">
+                    <div class="hamster__head">
+                        <div class="hamster__ear"></div>
+                        <div class="hamster__eye"></div>
+                        <div class="hamster__nose"></div>
+                    </div>
+                    <div class="hamster__limb hamster__limb--fr"></div>
+                    <div class="hamster__limb hamster__limb--fl"></div>
+                    <div class="hamster__limb hamster__limb--br"></div>
+                    <div class="hamster__limb hamster__limb--bl"></div>
+                    <div class="hamster__tail"></div>
+                </div>
+            </div>
+            <div class="spoke"></div>
+        </div>
+    </div>
 
-    <div id="content" style="display: none;">
+    <div class="content">
         <h1>Welcome!</h1>
         <p>I am <strong>Sakcham</strong>.</p>
         <p>Work is in progress...</p>
@@ -88,8 +102,8 @@
 
     <script>
         setTimeout(() => {
-            document.getElementById('loadingScreen').classList.add('hidden');
-            document.getElementById('content').style.display = 'block';
+            document.querySelector('.loading-screen').style.display = 'none';
+            document.querySelector('.content').style.display = 'block';
         }, 3000);
     </script>
 </body>
