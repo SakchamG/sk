@@ -12,13 +12,31 @@
             text-align: center;
             background: linear-gradient(120deg, #000428, #004e92);
             color: white;
-            padding: 50px;
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+        }
+
+        .loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 10;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         h1 {
@@ -43,90 +61,36 @@
         }
 
         @keyframes glow {
-            0% {
-                text-shadow: 0px 0px 10px cyan, 0px 0px 20px cyan;
-            }
-            100% {
-                text-shadow: 0px 0px 20px cyan, 0px 0px 40px cyan;
-            }
+            0% { text-shadow: 0px 0px 10px cyan; }
+            100% { text-shadow: 0px 0px 20px cyan; }
         }
 
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                text-shadow: 0px 0px 10px red, 0px 0px 20px red;
-            }
-            100% {
-                transform: scale(1.1);
-                text-shadow: 0px 0px 20px red, 0px 0px 40px red;
-            }
-        }
-
-        /* Background animation */
-        .background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .background span {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            animation: floating 10s infinite linear;
-        }
-
-        @keyframes floating {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
     </style>
 </head>
 <body>
+    <div class="loading-screen" id="loadingScreen">Loading...</div>
 
-    <div class="background">
-        <!-- Floating animated bubbles -->
-        <script>
-            for (let i = 0; i < 50; i++) {
-                let bubble = document.createElement("span");
-                let size = Math.random() * 10 + 5;
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.left = `${Math.random() * 100}vw`;
-                bubble.style.animationDuration = `${Math.random() * 5 + 5}s`;
-                bubble.style.animationDelay = `${Math.random() * 5}s`;
-                document.querySelector('.background').appendChild(bubble);
-            }
-        </script>
+    <div id="content" style="display: none;">
+        <h1>Welcome!</h1>
+        <p>I am <strong>Sakcham</strong>.</p>
+        <p>Work is in progress...</p>
+        <p class="caution">⚠️ Caution: Something crazy is about to happen here! 🚀</p>
     </div>
 
-    <h1>Welcome!</h1>
-    <p>I am <strong>Sakcham</strong>.</p>
-    <p>Work is in progress...</p>
-    <p class="caution">⚠️ Caution: Something crazy is about to happen here! 🚀</p>
-
+    <script>
+        setTimeout(() => {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('content').style.display = 'block';
+        }, 3000);
+    </script>
 </body>
 </html>
