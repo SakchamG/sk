@@ -1,194 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Sakcham</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome - Sakcham</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
-        body {
-            font-family: 'Orbitron', sans-serif;
-            text-align: center;
-            background: linear-gradient(120deg, #000428, #004e92);
-            color: white;
-            padding: 50px;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            transition: opacity 1s ease-in-out;
-        }
+    :root {
+      --bg-color: linear-gradient(120deg, #000428, #004e92);
+      --text-color: white;
+      --accent-color: cyan;
+      --photo-border: cyan;
+    }
 
-        .content {
-            display: none;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        h1 {
-            font-size: 4rem;
-            color: cyan;
-            text-shadow: 0px 0px 10px cyan, 0px 0px 20px cyan;
-            animation: glow 1.5s infinite alternate;
-        }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      transition: all 0.4s ease-in-out;
+    }
 
-        p {
-            font-size: 1.5rem;
-            margin: 10px 0;
-            animation: fadeIn 2s ease-in-out;
-        }
+    h1 {
+      font-size: 3rem;
+      color: var(--accent-color);
+      text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+      animation: glow 1.5s infinite alternate;
+    }
 
-        .caution {
-            color: red;
-            font-size: 2rem;
-            font-weight: bold;
-            text-shadow: 0px 0px 10px red, 0px 0px 20px red;
-            animation: pulse 1.5s infinite alternate;
-        }
+    p {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
 
-        @keyframes glow {
-            0% { text-shadow: 0px 0px 10px cyan, 0px 0px 20px cyan; }
-            100% { text-shadow: 0px 0px 20px cyan, 0px 0px 40px cyan; }
-        }
+    .caution {
+      color: red;
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px red, 0 0 20px red;
+      animation: pulse 1.5s infinite alternate;
+    }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px var(--accent-color); }
+      100% { text-shadow: 0 0 20px var(--accent-color); }
+    }
 
-        @keyframes pulse {
-            0% { transform: scale(1); text-shadow: 0px 0px 10px red, 0px 0px 20px red; }
-            100% { transform: scale(1.1); text-shadow: 0px 0px 20px red, 0px 0px 40px red; }
-        }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
 
-        /* Loading Screen */
-        .loading-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+    .creator-info {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
 
-        /* Hamster Animation */
-        .wheel-and-hamster {
-            --dur: 1s;
-            position: relative;
-            width: 12em;
-            height: 12em;
-            font-size: 14px;
-        }
+    .creator-info img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid var(--photo-border);
+      box-shadow: 0 0 15px var(--photo-border);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .wheel, .hamster, .hamster div, .spoke {
-            position: absolute;
-        }
+    .creator-info img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px var(--photo-border), 0 0 50px var(--photo-border);
+    }
 
-        .wheel, .spoke {
-            border-radius: 50%;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+    .creator-info p {
+      margin-top: 5px;
+      font-size: 0.8rem;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
 
-        .wheel {
-            background: radial-gradient(100% 100% at center,hsla(0,0%,60%,0) 47.8%,hsl(0,0%,60%) 48%);
-            z-index: 2;
-        }
+    /* Dark mode toggle */
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 8px 16px;
+      background: none;
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
 
-        .hamster {
-            animation: hamster var(--dur) ease-in-out infinite;
-            top: 50%;
-            left: calc(50% - 3.5em);
-            width: 7em;
-            height: 3.75em;
-            transform: rotate(4deg) translate(-0.8em,1.85em);
-            transform-origin: 50% 0;
-            z-index: 1;
-        }
+    .toggle-btn:hover {
+      background: var(--accent-color);
+      color: #000;
+    }
 
-        .hamster__head {
-            animation: hamsterHead var(--dur) ease-in-out infinite;
-            background: hsl(30,90%,55%);
-            border-radius: 70% 30% 0 100% / 40% 25% 25% 60%;
-            top: 0;
-            left: -2em;
-            width: 2.75em;
-            height: 2.5em;
-        }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.5s ease;
+      padding: 20px;
+    }
 
-        .hamster__eye {
-            background-color: black;
-            border-radius: 50%;
-            top: 0.375em;
-            left: 1.25em;
-            width: 0.5em;
-            height: 0.5em;
-        }
+    .modal-content {
+      max-width: 90vw;
+      max-height: 80vh;
+      animation: zoomIn 0.3s ease;
+      border-radius: 20px;
+    }
 
-        @keyframes hamster {
-            from, to { transform: rotate(4deg) translate(-0.8em,1.85em); }
-            50% { transform: rotate(0) translate(-0.8em,1.85em); }
-        }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+    }
 
-        @keyframes hamsterHead {
-            from, 25%, 50%, 75%, to { transform: rotate(0); }
-            12.5%, 37.5%, 62.5%, 87.5% { transform: rotate(8deg); }
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-        /* Hide loading screen after 3 seconds */
-        .hide {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
-        }
-    </style>
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .caution {
+        font-size: 1.2rem;
+      }
+
+      .creator-info img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .modal-content {
+        max-width: 95vw;
+        max-height: 75vh;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Loading Screen -->
-    <div class="loading-container" id="loading-screen">
-        <div class="wheel-and-hamster">
-            <div class="wheel"></div>
-            <div class="hamster">
-                <div class="hamster__body">
-                    <div class="hamster__head">
-                        <div class="hamster__ear"></div>
-                        <div class="hamster__eye"></div>
-                        <div class="hamster__nose"></div>
-                    </div>
-                    <div class="hamster__limb hamster__limb--fr"></div>
-                    <div class="hamster__limb hamster__limb--fl"></div>
-                    <div class="hamster__limb hamster__limb--br"></div>
-                    <div class="hamster__limb hamster__limb--bl"></div>
-                    <div class="hamster__tail"></div>
-                </div>
-            </div>
-            <div class="spoke"></div>
-        </div>
-    </div>
+  <!-- Dark Mode Toggle -->
+  <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Mode</button>
 
-    <!-- Main Content -->
-    <div class="content" id="main-content">
-        <h1>Welcome!</h1>
-        <p>I am <strong>Sakcham</strong>.</p>
-        <p>Work is in progress...</p>
-        <p class="caution">⚠️ Caution: Something crazy is about to happen here! 🚀</p>
-    </div>
+  <!-- Creator Photo + Info -->
+  <div class="creator-info">
+    <img src='5.2.jpg' alt="Creator Photo" onclick="openModal()" />
+    <p>Creator Sakcham Gupta</p>
+  </div>
 
-    <script>
-        // Show loading screen for 3 seconds, then display the main content
-        setTimeout(() => {
-            document.getElementById("loading-screen").classList.add("hide");
-            document.getElementById("main-content").style.display = "block";
-        }, 3000);
-    </script>
+  <!-- Modal -->
+  <div id="photoModal" class="modal" onclick="closeModal()">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImg" src="5.2.jpg" alt="Zoomed Creator Photo">
+  </div>
+
+  <!-- Main Content -->
+  <h1>Welcome!</h1>
+  <p>I am <strong>Sakcham</strong>.</p>
+  <p>Work is in progress...</p>
+  <p class="caution">⚠️ Caution: Something crazy is about to happen here! 🚀</p>
+
+  <script>
+    function openModal() {
+      document.getElementById("photoModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("photoModal").style.display = "none";
+    }
+
+    function toggleDarkMode() {
+      const body = document.body;
+      if (body.style.background === "black") {
+        body.style.background = "linear-gradient(120deg, #000428, #004e92)";
+        body.style.color = "white";
+      } else {
+        body.style.background = "black";
+        body.style.color = "#0ff";
+      }
+    }
+  </script>
 
 </body>
 </html>
