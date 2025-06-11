@@ -1,299 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome - Sakcham</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sakcham's Futuristic Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-
     :root {
-      --bg-color: linear-gradient(120deg, #000428, #004e92);
-      --text-color: white;
-      --accent-color: cyan;
-      --photo-border: cyan;
+      --primary: #0ff;
+      --bg-light: #f0f0f5;
+      --bg-dark: #0d0d0d;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --glass: rgba(255, 255, 255, 0.2);
+      --text-color: #fff;
+      --accent: #00ffd0;
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
       font-family: 'Orbitron', sans-serif;
-      margin: 0;
-      background: var(--bg-color);
+      background: linear-gradient(145deg, #1c1f27, #111318);
       color: var(--text-color);
-      overflow: hidden;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-      transition: all 0.4s ease-in-out;
+      overflow-x: hidden;
     }
 
-    h1 {
-      font-size: 3rem;
-      color: var(--accent-color);
-      text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
-      animation: glow 1.5s infinite alternate;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin: 10px 0;
-    }
-
-    .caution {
-      color: red;
-      font-size: 1.4rem;
-      font-weight: bold;
-      text-shadow: 0 0 10px red, 0 0 20px red;
-      animation: pulse 1.5s infinite alternate;
-    }
-
-    @keyframes glow {
-      0% { text-shadow: 0 0 10px var(--accent-color); }
-      100% { text-shadow: 0 0 20px var(--accent-color); }
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.1); }
-    }
-
-    .creator-info {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      text-align: center;
-      animation: fadeIn 1s ease;
-      z-index: 2;
-    }
-
-    .creator-info img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 3px solid var(--photo-border);
-      box-shadow: 0 0 15px var(--photo-border);
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .creator-info img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px var(--photo-border), 0 0 50px var(--photo-border);
-    }
-
-    .creator-info p {
-      margin-top: 5px;
-      font-size: 0.8rem;
-      color: var(--accent-color);
-      font-weight: bold;
-    }
-
-    .toggle-btn {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 8px 16px;
-      background: none;
-      border: 2px solid var(--accent-color);
-      color: var(--accent-color);
-      font-size: 0.9rem;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      z-index: 2;
-    }
-
-    .toggle-btn:hover {
-      background: var(--accent-color);
-      color: #000;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 10000;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.9);
-      align-items: center;
-      justify-content: center;
-      animation: fadeIn 0.5s ease;
-      padding: 20px;
-    }
-
-    .modal-content {
-      max-width: 90vw;
-      max-height: 80vh;
-      animation: zoomIn 0.3s ease;
-      border-radius: 20px;
-    }
-
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2.5rem;
-      color: white;
-      cursor: pointer;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .content {
-      display: none;
-    }
-
-    .loader-container {
-      position: fixed;
-      top: 0;
-      left: 0;
+    header {
       width: 100%;
-      height: 100%;
-      background: black;
+      padding: 20px 40px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease-in-out;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--accent);
     }
 
-    .loader {
-      width: 160px;
-      height: 185px;
-      position: relative;
-      background: #fff;
-      border-radius: 100px 100px 0 0;
+    header h1 {
+      color: var(--accent);
+      font-size: 2rem;
     }
 
-    .loader:after {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 125px;
-      left: 50%;
-      top: 25px;
-      transform: translateX(-50%);
-      background-image:
-        radial-gradient(circle, #000 48%, transparent 55%),
-        radial-gradient(circle, #000 48%, transparent 55%),
-        radial-gradient(circle, #fff 30%, transparent 45%),
-        radial-gradient(circle, #000 48%, transparent 51%),
-        linear-gradient(#000 20px, transparent 0),
-        linear-gradient(#cfecf9 60px, transparent 0),
-        radial-gradient(circle, #cfecf9 50%, transparent 51%),
-        radial-gradient(circle, #cfecf9 50%, transparent 51%);
-      background-repeat: no-repeat;
-      background-size: 16px 16px, 16px 16px, 10px 10px, 42px 42px, 12px 3px,
-        50px 25px, 70px 70px, 70px 70px;
-      background-position:
-        25px 10px, 55px 10px, 36px 44px, 50% 30px, 50% 85px,
-        50% 50px, 50% 22px, 50% 45px;
-      animation: faceLift 3s linear infinite alternate;
+    nav a {
+      margin-left: 20px;
+      color: var(--text-color);
+      text-decoration: none;
+      transition: 0.3s;
     }
 
-    .loader:before {
-      content: "";
-      position: absolute;
-      width: 140%;
-      height: 125px;
-      left: -20%;
-      top: 0;
-      background-image:
-        radial-gradient(circle, #fff 48%, transparent 50%),
-        radial-gradient(circle, #fff 48%, transparent 50%);
-      background-repeat: no-repeat;
-      background-size: 65px 65px;
-      background-position: 0px 12px, 145px 12px;
-      animation: earLift 3s linear infinite alternate;
+    nav a:hover {
+      color: var(--primary);
     }
 
-    @keyframes faceLift {
-      0% { transform: translateX(-60%); }
-      100% { transform: translateX(-30%); }
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      background: linear-gradient(120deg, #000428, #004e92);
     }
 
-    @keyframes earLift {
-      0% { transform: translateX(10px); }
-      100% { transform: translateX(0px); }
+    .hero h1 {
+      font-size: 4rem;
+      color: var(--accent);
+      text-shadow: 0 0 20px var(--accent);
     }
 
-    @media (max-width: 600px) {
-      h1 { font-size: 2.2rem; }
-      p { font-size: 1rem; }
-      .caution { font-size: 1.2rem; }
-      .creator-info img { width: 70px; height: 70px; }
-      .modal-content { max-width: 95vw; max-height: 75vh; }
+    .hero p {
+      font-size: 1.5rem;
+      color: var(--text-color);
+    }
+
+    .section {
+      padding: 80px 40px;
+      background: #1c1f27;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--primary);
+      border-radius: 20px;
+      padding: 40px;
+      margin: 20px auto;
+      max-width: 900px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 20px var(--primary);
+    }
+
+    .card h2 {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--text-color);
+    }
+
+    footer {
+      background: #111;
+      color: #888;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .glow-button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 0 20px var(--accent);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .glow-button:hover {
+      box-shadow: 0 0 40px var(--accent);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Sakcham</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-  <div class="loader-container" id="loader">
-    <div class="loader"></div>
-  </div>
+  <section class="hero">
+    <h1>Hello, I'm SK 👨‍🚀</h1>
+    <p>Future-ready Developer | Dream Builder | Tech Innovator</p>
+    <button class="glow-button" onclick="window.location.href='https://www.instagram.com/sakcham2212_'">Connect with Me</button>
+  </section>
 
-  <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Mode</button>
+  <section class="section" id="about">
+    <div class="card">
+      <h2>About Me</h2>
+      <p>I am a passionate developer building the future one pixel at a time. I'm deeply into futuristic UI/UX, AI/ML , and meaningful digital experiences And working on new skill set as well to use my creativity and mindset.</p>
+    </div>
+  </section>
 
-  <div class="creator-info">
-    <img src="5.2.jpg" alt="Creator Photo" onclick="openModal()" />
-    <p>Creator Sakcham Gupta</p>
-  </div>
+  <section class="section" id="skills">
+    <div class="card">
+      <h2>Skills</h2>
+      <p>Full Stack Web Development, UI/UX, Artificial Intelligence, Machine Learning, Python, React, Node.js, Java, Quantum physics, Music ( Guitar, Singing ) and many more.</p>
+    </div>
+  </section>
 
-  <div id="photoModal" class="modal" onclick="closeModal()">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImg" src="5.2.jpg" alt="Zoomed Creator Photo">
-  </div>
+  <section class="section" id="projects">
+    <div class="card">
+      <h2>Projects</h2>
+      <p>Creating apps and platforms that simplify lives — from smart assistants to web ecosystems. Coming soon: my mega AI dashboard, Have created many projects now working on something innovativbe and futuristic in AI/ML field</p>
+    </div>
+  </section>
 
-  <div class="content" id="main-content">
-    <h1>Welcome!</h1>
-    <p>I am <strong>Sakcham</strong>.</p>
-    <p>Work is in progress...</p>
-    <p class="caution">⚠️ Caution: Something crazy is about to happen here! 🚀</p>
-  </div>
+  <section class="section" id="contact">
+    <div class="card">
+      <h2>Contact</h2>
+      <p>Email: tavishmy@gmail.com | Phone: +91-8957429007 | Location: Bangalore</p>
+    </div>
+  </section>
 
-  <script>
-    // Show content after 2s
-    setTimeout(() => {
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("main-content").style.display = "block";
-    }, 2000);
-
-    function openModal() {
-      document.getElementById("photoModal").style.display = "flex";
-    }
-
-    function closeModal() {
-      document.getElementById("photoModal").style.display = "none";
-    }
-
-    function toggleDarkMode() {
-      const body = document.body;
-      if (body.style.background === "black") {
-        body.style.background = "linear-gradient(120deg, #000428, #004e92)";
-        body.style.color = "white";
-      } else {
-        body.style.background = "black";
-        body.style.color = "#0ff";
-      }
-    }
-  </script>
-
+  <footer>
+    &copy; 2024 Sakcham Gupta. Built to inspire, powered by SK Group Of Companies LTD PVT.
+  </footer>
 </body>
 </html>
